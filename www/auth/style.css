@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fefeff; /* Dark background for the body */
+}
+
+nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    z-index: 10; /* Ensure nav is above other elements */
+}
+
+.nav-logo {
+    max-width: 100px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.link a {
+    position: relative;
+    padding-bottom: 0.75rem;
+    color: #ffffff;
+}
+
+.link a::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #1d4ed8;
+    transition: all 0.3s ease;
+}
+
+.link a:hover::after {
+    width: 70%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.box {
+    padding: 20px 30px;
+    width: 300px;
+    backdrop-filter: blur(50px);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid white;
+    margin: 20px; /* Adjust margin to center both boxes */
+    position: relative;
+    z-index: 1;
+}
+
+.box .form {
+    padding: 10px 20px;
+}
+
+.box .form h2 {
+    text-align: center;
+    color: #000000;
+}
+
+.box .form form {
+    margin-top: 20px; /* Adjust margin for better spacing */
+}
+
+.box .form form .inputbox {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.box .form form .inputbox input {
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+    width: 100%;
+}
+
+.box .form form .inputbox span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #000000;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.box .form form .inputbox input:focus ~ span,
+.box .form form .inputbox input:valid ~ span {
+    transform: translateY(-20px);
+    font-size: 12px;
+    color: #000000;
+}
+
+.box .form form .sub {
+    padding: 10px 20px;
+    color: #000000;
+    border: none;
+    outline: none;
+    background: #0cc0df;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.box .form p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.box .form p a {
+    color: #0cc0df;
+    font-weight: bold;
+}

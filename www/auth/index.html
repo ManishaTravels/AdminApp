@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin App - Auth</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Registration Form -->
+        <div class="box" id="register-box">
+            <div class="form">
+                <h2>Register</h2>
+                <form id="registrationForm">
+                    <div class="inputbox">
+                        <input type="text" id="username" required>
+                        <span>Username</span>
+                    </div>
+                    <div class="inputbox">
+                        <input type="email" id="email" required>
+                        <span>E-mail</span>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" id="password" required>
+                        <span>Password</span>
+                    </div>
+                    <input type="submit" value="Submit" class="sub">
+                </form>
+                <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="box" id="login-box" style="display: none;">
+            <div class="form">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="inputbox">
+                        <input type="email" id="login-email" required>
+                        <span>E-mail</span>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" id="login-password" required>
+                        <span>Password</span>
+                    </div>
+                    <input type="submit" value="Login" class="sub">
+                </form>
+                <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUc-l4omgQhOwvOApmT__kdJV4ayr7Spk",
+            authDomain: "admin-app-bhs-ix.firebaseapp.com",
+            projectId: "admin-app-bhs-ix",
+            storageBucket: "admin-app-bhs-ix.appspot.com",
+            messagingSenderId: "649253202177",
+            appId: "1:649253202177:web:ea29c8223572dba26bd300",
+            measurementId: "G-SHW5W22KF7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Toggle between forms
+        document.getElementById('show-login').addEventListener('click', function() {
+            document.getElementById('register-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+        });
+
+        document.getElementById('show-register').addEventListener('click', function() {
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('register-box').style.display = 'block';
+        });
+
+        // Registration form
+        document.getElementById("registrationForm").addEventListener('submit', async function(e){
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!username || !email || !password) {
+                alert("All fields are required!");
+                return;
+            }
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                await setDoc(doc(db, "users", username), {
+                    username: username,
+                    email: email,
+                    password: password
+                });
+
+                localStorage.setItem('username', username);
+                // Redirect to main.html after successful login
+                window.location.href = "../main/main.html";
+
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Error: Registration failed! " + error.message);
+            }
+        });
+
+        // Login form
+        document.getElementById("loginForm").addEventListener('submit', async function(e){
+            e.preventDefault();
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+
+            if (!email || !password) {
+                alert("All fields are required!");
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                localStorage.setItem('username', userCredential.user.displayName);
+                window.location.href = "../main/main.html";
+
+            } catch (error) {
+                console.error("Error logging in: ", error);
+                alert("Error: Login failed! " + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

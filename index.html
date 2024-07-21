@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin App</title>
+</head>
+<body>
+    <div id="welcome">Welcome To Admin App</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var welcomeMessage = document.getElementById('welcome');
+            welcomeMessage.style.display = 'block';
+            setTimeout(function() {
+                window.location.href = 'www/auth/index.html';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
